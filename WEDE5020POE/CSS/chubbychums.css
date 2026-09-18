@@ -1,5 +1,5 @@
 * {
-    margin: 2px;
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
@@ -276,21 +276,18 @@ input:focus, select:focus, textarea:focus {
 }
 
 /*media breakpoint for phones*/
-@media (max-width: 480px) {}
+@media (max-width: 480px) {
+    h1 {font-size: 1.8rem;}
+    h2 {font-size: 1.5rem;}
+}
 
 
 /*media breakpoint for tablets, which is 481 to 768*/
-@media (max-width: 768px) {} 
-    
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
         align-items: center;
     }
-
-} 
-
-@media (max-width: 768px) {
     .top-section {
         flex-direction: column;
     }
@@ -299,21 +296,11 @@ input:focus, select:focus, textarea:focus {
         margin-right: 0;
         margin-bottom: 20px;
     }
-}
-
-@media (max-width: 768px) {
     .cards-row {
         flex-direction: column;
     }
-}
-
-@media (max-width: 768px) {
     .form-section {
         flex-direction: column;
     }
-}
-
-@media (max-width: 480px) {
-    h1 {font-size: 1.8rem;}
-    h2 {font-size: 1.5rem;}
-}
+} 
+    
