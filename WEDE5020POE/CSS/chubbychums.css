@@ -1,13 +1,13 @@
 * {
-    margin: 0;
+    margin: 2px;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
     font-family:Arial, Helvetica, sans-serif;
-    background-color: #FFFFFF;
-    color: #000000;
+    background-color:  #000000;
+    color: #FFFFFF;
 }
 
 h1 {
@@ -16,6 +16,7 @@ h1 {
 
 h2 {
     font-size: 2rem;
+    text-align: center;
 }
 
 p {
@@ -25,13 +26,24 @@ p {
 
 a {
     font-size: 1rem;
-    color: #ffffff;
+    color: #FFFFFF;
     text-decoration: none;
     font-weight: bold;
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
 }
 
 a:hover {
-    background-color: #000000;
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+a:focus {
+    outline: 2px solid #FFFFFF;
+}
+
+a:active {
+    background-color: #000000 ;
     color: #FFFFFF;
 }
 
@@ -40,6 +52,230 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     background-color: #000000;
-    color: #FFFFFF;
     padding: 1rem;
+    border-bottom: solid;
+    border-top: solid;
+    border-color: #FF9900;
+    border-width: 5px;
+    margin-bottom: 10px;
 }
+
+.HomeLink {
+    background-color: #FF0000;
+}
+
+.AboutLink {
+    background-color: #1AFF00;
+}
+
+.DonateLink {
+    background-color: #FFF200;
+}
+
+.EnquiryLink {
+    background-color: #00A2FF;
+}
+
+.ContactLink {
+    background-color: #BF00FF;
+}
+
+.top-section {
+    display: flex; 
+    align-items: center;
+}
+
+.top-section p {
+    flex-grow: 2;
+    border: solid;
+    border-color: #BF00FF;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.top-section img {
+    flex-grow: 1;
+    border-radius: 16px;
+    margin-right: 20px;
+    border: solid;
+    border-color: #1AFF00;
+    max-width: 30%;
+    height: auto;
+}
+
+.top-section h1 {
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.welcome-text {
+    flex-grow: 2;
+    padding-right: 20px;
+    text-align: center;
+    margin: 10px;
+    
+}
+
+.mission-text {
+    padding-right: 20px;
+    text-align: center;
+    margin: 10px;
+    border: solid;
+    border-color: #00A2FF;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.cards-row {
+    display: flex;
+}
+
+.card {
+    flex: 1;
+    margin: 10px;
+    text-align: center;
+    padding: 20px;
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    
+}
+
+.card1 {
+    border: solid;
+    border-color: #1AFF00;
+    border-radius: 16px;
+    
+}
+
+.card2 {
+    border: solid;
+    border-color: #FFF200;
+    border-radius: 16px;
+    
+}
+
+.card3 {
+    border: solid;
+    border-color: #00A2FF;
+    border-radius: 16px;
+    
+}
+
+.card4 {
+    border: solid;
+    border-color: #BF00FF;
+    border-radius: 16px;
+  
+}
+
+.card a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.CPS-partnership {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+footer {
+    background-color: #000000;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 1rem;
+    border-top: solid;
+    border-color: #FF9900;
+    border-width: 5px;
+    margin-top: 20px;
+}
+
+.bottom-about-section {
+    margin-bottom: 20px;
+    border-color: #ff0000;
+}
+
+.about-heading {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.banking-details {
+    border-color: #1AFF00;
+}
+
+.registration-details {
+    border-color: #FFF200;
+}
+
+.ask-for-help {
+    border-color: #FF0000;
+}
+
+.enquiry-heading {
+    border-color:#FF0000;
+}
+
+form {
+    border: solid;
+    border-color: #1AFF00;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 5px;
+    flex-grow: 1;
+}
+
+label {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    margin: 5px;
+}
+
+input, select, textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    border: solid;
+    border-radius: 16px;
+    padding: 10px;
+    margin: 5px;
+    color: #FFFFFF;
+    background-color: #000000;
+    border-color: #FF9900;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #FFFFFF;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-section img {
+    flex-grow: 1;
+    max-width: 50%;
+    height: auto;
+    border: solid;
+    border-color: #1AFF00;
+    border-radius: 16px;
+}
+
+.details {
+    border-color: #BF00FF;
+    margin-bottom: 30px;
+}
+
+.contact-header {
+    border-color: #FFF200;
+    margin: 20px;
+}
+
+@media (max-width: 480px) {} /*media breakpoint for phones*/
+
+@media (max-width: 768px) {} /*media breakpoint for tablets, which is 481 to 768*/
+    
