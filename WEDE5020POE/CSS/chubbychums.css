@@ -304,3 +304,8 @@ input:focus, select:focus, textarea:focus {
     }
 } 
     
+input:hover, select:hover, textarea:hover {
+
+    box-shadow: 0 0 20px #FFF200;
+
+}
