@@ -309,3 +309,35 @@ input:hover, select:hover, textarea:hover {
     box-shadow: 0 0 20px #FFF200;
 
 }
+
+.accordion-panel {
+    display: none;
+}
+
+.accordion-button {
+    background-color: #000000;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px;
+    width: 100%;
+    text-align: center;
+    border: solid;
+    border-color: #FF9900;
+    border-radius: 16px;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.accordion-button:hover {
+    background-color: #FF9900;
+    color: #000000;
+}
+
+.accordion-panel.open {
+    display: block;
+}
+
+.top-section.accordion-panel.open {
+    display: flex;
+}
