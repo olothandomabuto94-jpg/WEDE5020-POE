@@ -341,3 +341,31 @@ input:hover, select:hover, textarea:hover {
 .top-section.accordion-panel.open {
     display: flex;
 }
+
+/* Accordion animation: panels fade and slide in when opened */
+@keyframes accordion-open {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.accordion-panel.open {
+    animation: accordion-open 0.4s ease;
+}
+
+/* Visible focus ring for keyboard users (the button has outline: none above) */
+.accordion-button:focus-visible {
+    outline: 2px solid #FFFFFF;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .accordion-panel.open {
+        animation: none;
+    }
+}
