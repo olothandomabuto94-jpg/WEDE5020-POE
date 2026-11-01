@@ -145,7 +145,7 @@ if (mapContainer) {
         // between the quotes below. While it is empty, the map falls back to OpenStreetMap's standard tiles,
         // which only load when the site is opened through a web address (Live Server, Netlify, GitHub Pages)
         // and NOT when the HTML file is opened by double-clicking it.
-        let cartoApiKey = "";
+        let cartoApiKey = "cb1_4zob_1_a5da09c9a748588cf63f470e";
 
         // Default: OpenStreetMap tiles (the attribution is required by their licence)
         let tileUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
