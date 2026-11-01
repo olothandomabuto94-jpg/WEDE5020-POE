@@ -70,23 +70,25 @@
       <section class="form-section">
         
 
-        <form>
+        <form novalidate>
+
+          <p class="form-note">Fields marked with an asterisk (*) are required.</p>
 
           <!-- Name  -->
-          <label for="name">Name:</label><br />
-          <input type="text" id="name" name="name" /><br /><br />
+          <label for="name">Name:<span class="required-mark" aria-hidden="true"> *</span></label><br />
+          <input type="text" id="name" name="name" required autocomplete="name" /><br /><br />
 
           <!-- Email  -->
-          <label for="email">Email:</label><br />
-          <input type="email" id="email" name="email" /><br /><br />
+          <label for="email">Email:<span class="required-mark" aria-hidden="true"> *</span></label><br />
+          <input type="email" id="email" name="email" required autocomplete="email" /><br /><br />
 
           <!-- Phone -->
           <label for="phone">Phone:</label><br />
-          <input type="tel" id="phone" name="phone" /><br /><br />
+          <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" /><br /><br />
 
           <!-- Message -->
-          <label for="message">Message:</label><br />
-          <textarea id="message" name="message" rows="6" cols="40"></textarea><br /><br />
+          <label for="message">Message:<span class="required-mark" aria-hidden="true"> *</span></label><br />
+          <textarea id="message" name="message" rows="6" cols="40" required></textarea><br /><br />
 
           <input type="submit" value="Send" />
 

@@ -113,6 +113,26 @@ Home (index.html)
 - Added responsive media queries (768px and 480px breakpoints) across all pages, converting Flexbox rows to stacked columns and scaling typography on smaller screens
 - Captured screenshot evidence of all five pages at desktop, tablet, and mobile widths
 
+## Form Validation
+
+JavaScript validation was added to the contact form and the enquiry form (`chubbychums.js`). Both forms use the `novalidate` attribute so the JavaScript messages are shown instead of the browser's default pop-ups.
+
+| Field | Rules |
+|-------|-------|
+| Name (contact: required, enquiry: optional) | 2-60 characters; letters (including accented), spaces, apostrophes, full stops and hyphens only |
+| Email (contact: required, enquiry: optional) | Must look like `name@example.com` |
+| Phone (optional on both forms) | South African number: 10 digits starting with 0, or +27 followed by 9 digits; spaces, hyphens and brackets allowed |
+| Child's name (enquiry, optional) | Same rules as a name |
+| Child's location (enquiry, required) | 3-100 characters |
+| Reason for enquiry (enquiry, required) | A reason must be chosen from the drop-down |
+| Message / description (both, required) | 10-2000 characters |
+
+- **Feedback:** each problem is shown under its field in red, with a summary at the top of the form after a failed submit. The first problem field is focused automatically.
+- **Timing:** a field is checked when the visitor leaves it (after they have typed in it), and the message clears as soon as the value is fixed. Empty required fields are only reported on submit.
+- **Accessibility:** fields use `required`, `aria-invalid` and `aria-describedby`, errors are announced to screen readers, and the checks work with the keyboard alone.
+- **Anonymous reports:** the enquiry form accepts a report with no name, email or phone number, because reporters may wish to stay anonymous.
+- **Current limitation:** the forms are not connected to an email or form service yet, so a valid form shows a thank-you message that says nothing has been sent, and points to the phone numbers. This will change when the site is deployed.
+
 ## Search Engine Optimization (SEO)
 
 ### On-page SEO

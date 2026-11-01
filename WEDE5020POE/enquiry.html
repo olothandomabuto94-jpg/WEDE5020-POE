@@ -61,28 +61,31 @@
 
       <section class="form-section">
       
-        <form class="enquiry-form">
+        <form class="enquiry-form" novalidate>
+
+          <p class="form-note">Your name, email and phone number are optional. Fields marked with an asterisk (*) are required.</p>
 
           <!-- Reporter's own details. This form is optional -->
           <label for="name">Your Name (optional):</label><br />
-          <input type="text" id="name" name="name" /><br /><br />
+          <input type="text" id="name" name="name" autocomplete="name" /><br /><br />
 
           <label for="email">Your Email:</label><br />
-          <input type="email" id="email" name="email" /><br /><br />
+          <input type="email" id="email" name="email" autocomplete="email" /><br /><br />
 
           <label for="phone">Your Phone Number:</label><br />
-          <input type="tel" id="phone" name="phone" /><br /><br />
+          <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" /><br /><br />
 
           <!-- Details about the child being reported on -->
           <label for="childname">Child's Name (if known):</label><br />
-          <input type="text" id="childname" name="childname" /><br /><br />
+          <input type="text" id="childname" name="childname" autocomplete="off" /><br /><br />
 
-          <label for="location">Child's Location or Area:</label><br />
-          <input type="text" id="location" name="location" /><br /><br />
+          <label for="location">Child's Location or Area:<span class="required-mark" aria-hidden="true"> *</span></label><br />
+          <input type="text" id="location" name="location" required /><br /><br />
 
           <!-- Nature of the concern -->
-          <label for="reason">Reason for Enquiry:</label><br />
-          <select id="reason" name="reason">
+          <label for="reason">Reason for Enquiry:<span class="required-mark" aria-hidden="true"> *</span></label><br />
+          <select id="reason" name="reason" required>
+            <option value="">Please choose a reason</option>
             <option value="abuse">Suspected Abuse</option>
             <option value="neglect">Suspected Neglect</option>
             <option value="poverty">Poverty / Basic Needs</option>
@@ -91,8 +94,8 @@
           </select><br /><br />
 
           <!-- Free-text description -->
-          <label for="message">Please describe your concern:</label><br />
-          <textarea id="message" name="message" rows="6" cols="40"></textarea><br /><br />
+          <label for="message">Please describe your concern:<span class="required-mark" aria-hidden="true"> *</span></label><br />
+          <textarea id="message" name="message" rows="6" cols="40" required></textarea><br /><br />
 
           <input type="submit" value="Submit Enquiry" />
 

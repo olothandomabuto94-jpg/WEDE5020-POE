@@ -788,3 +788,53 @@ mark {
 textarea {
     max-width: calc(100% - 10px);
 }
+
+
+/* ---------- Form validation ---------- */
+.form-note {
+    margin: 5px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.required-mark {
+    color: #FF9900;
+    font-weight: bold;
+}
+
+/* A field with a problem gets a red border and a message underneath it */
+input.input-error,
+select.input-error,
+textarea.input-error {
+    border-color: #FF0000;
+}
+
+.field-error {
+    color: #FF6B6B;
+    font-size: 0.9rem;
+    margin: 0 5px 5px 15px;
+}
+
+.form-summary {
+    border: solid;
+    border-color: #FF0000;
+    border-radius: 16px;
+    padding: 10px;
+    margin: 5px 5px 15px 5px;
+}
+
+.form-success {
+    border: solid;
+    border-color: #1AFF00;
+    border-radius: 16px;
+    padding: 15px;
+    margin: 5px 5px 15px 5px;
+}
+
+.form-success p {
+    margin-top: 10px;
+}
+
+.form-success:focus {
+    outline: 2px solid #FFFFFF;
+}

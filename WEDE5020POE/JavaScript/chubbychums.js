@@ -575,3 +575,262 @@ if (faqSection) {
     faqSort.addEventListener("change", showFaqs);
     showFaqs();
 }
+
+
+// ---------- Form validation (contact and enquiry pages) ----------
+
+let formsToValidate = document.querySelectorAll("form");
+
+formsToValidate.forEach(function (form) {
+
+    let isEnquiryForm = form.classList.contains("enquiry-form");
+    let fields = form.querySelectorAll('input:not([type="submit"]), select, textarea');
+
+    // Letters (including accented ones), spaces, apostrophes, full stops and hyphens
+    let namePattern = /^\p{L}[\p{L}\s'.-]*$/u;
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    // The message shown when a required field is left empty
+    let emptyMessages = {
+        name: "Please enter your name.",
+        email: "Please enter your email address.",
+        location: "Please tell us where the child is.",
+        reason: "Please choose the reason for your enquiry.",
+        message: isEnquiryForm ? "Please describe your concern." : "Please enter your message."
+    };
+
+    // Checks one field. Returns an error message, or an empty string when the field is fine.
+    let getError = function (field) {
+        let value = field.value.trim();
+
+        // Empty fields: only an error if the field is required
+        if (value === "") {
+            if (field.hasAttribute("required")) {
+                return emptyMessages[field.id] || "Please fill in this field.";
+            }
+            return "";
+        }
+
+        // Names (the reporter's name and the child's name)
+        if (field.id === "name" || field.id === "childname") {
+            let who = field.id === "name" ? "Your name" : "The child's name";
+            if (value.length < 2) {
+                return who + " must be at least 2 characters long.";
+            }
+            if (value.length > 60) {
+                return who + " must be 60 characters or fewer.";
+            }
+            if (!namePattern.test(value)) {
+                return who + " can only contain letters, spaces, apostrophes, full stops and hyphens.";
+            }
+        }
+
+        // Email address
+        if (field.id === "email") {
+            if (!emailPattern.test(value) || value.length > 254) {
+                return "Please enter a valid email address, for example name@example.com.";
+            }
+        }
+
+        // South African phone number: 10 digits starting with 0, or +27 followed by 9 digits.
+        // Spaces, hyphens and brackets are allowed when typing.
+        if (field.id === "phone") {
+            let digits = value.replace(/[\s\-()]/g, "");
+            if (!/^(0\d{9}|\+27\d{9}|27\d{9})$/.test(digits)) {
+                return "Please enter a valid South African phone number, for example 011 825 7773 or +27 11 825 7773.";
+            }
+        }
+
+        // Where the child is
+        if (field.id === "location") {
+            if (value.length < 3) {
+                return "Please enter at least 3 characters.";
+            }
+            if (value.length > 100) {
+                return "Please keep the location to 100 characters or fewer.";
+            }
+        }
+
+        // The message or description
+        if (field.id === "message") {
+            if (value.length < 10) {
+                return "Please write at least 10 characters (you have " + value.length + ").";
+            }
+            if (value.length > 2000) {
+                return "Please keep your message to 2000 characters or fewer (you have " + value.length + ").";
+            }
+        }
+
+        return "";
+    };
+
+    // Shows an error message under a field and marks the field as invalid
+    let showError = function (field, message) {
+        let errorBox = document.getElementById(field.id + "-error");
+
+        if (!errorBox) {
+            errorBox = document.createElement("p");
+            errorBox.className = "field-error";
+            errorBox.id = field.id + "-error";
+            field.insertAdjacentElement("afterend", errorBox);
+        }
+
+        errorBox.textContent = message;
+        field.classList.add("input-error");
+        field.setAttribute("aria-invalid", "true");
+        field.setAttribute("aria-describedby", errorBox.id);
+    };
+
+    // Removes the error message and the invalid marking from a field
+    let clearError = function (field) {
+        let errorBox = document.getElementById(field.id + "-error");
+
+        if (errorBox) {
+            errorBox.remove();
+        }
+
+        field.classList.remove("input-error");
+        field.removeAttribute("aria-invalid");
+        field.removeAttribute("aria-describedby");
+    };
+
+    // Checks a field and shows or clears its error. Returns true when the field is valid.
+    let validateField = function (field) {
+        let error = getError(field);
+
+        if (error === "") {
+            clearError(field);
+            return true;
+        }
+
+        showError(field, error);
+        return false;
+    };
+
+    // Pressing the Send button first moves focus out of the field being typed in. If that field's error
+    // message appeared at that moment, it would push the button down before the click finished and the click
+    // would be lost. So the "check when leaving a field" step is skipped while the button is being pressed
+    // (submitting checks every field anyway).
+    let submitButton = form.querySelector('input[type="submit"]');
+    let pressingSubmit = false;
+
+    submitButton.addEventListener("pointerdown", function () {
+        pressingSubmit = true;
+        window.addEventListener("pointerup", function () {
+            pressingSubmit = false;
+        }, { once: true });
+    });
+
+    // Check each field as the visitor fills it in. Empty required fields are only reported on submit,
+    // so nobody is told off for tabbing past a field.
+    fields.forEach(function (field) {
+        field.addEventListener("focus", function () {
+            pressingSubmit = false;
+        });
+
+        field.addEventListener("input", function () {
+            field.setAttribute("data-touched", "true");
+            if (field.getAttribute("aria-invalid") === "true") {
+                validateField(field);
+            }
+        });
+
+        field.addEventListener("change", function () {
+            field.setAttribute("data-touched", "true");
+            if (!pressingSubmit) {
+                validateField(field);
+            }
+        });
+
+        field.addEventListener("blur", function () {
+            if (field.getAttribute("data-touched") === "true" && !pressingSubmit) {
+                validateField(field);
+            }
+        });
+    });
+
+    // Removes the summary or thank-you box left over from a previous submit
+    let removeFormMessages = function () {
+        form.querySelectorAll(".form-summary, .form-success").forEach(function (box) {
+            box.remove();
+        });
+    };
+
+    // Shows the thank-you box and gets the form ready for another use
+    let showSuccess = function () {
+        let nameField = form.querySelector("#name");
+        let firstName = "";
+
+        if (nameField && nameField.value.trim() !== "") {
+            firstName = nameField.value.trim().split(/\s+/)[0];
+        }
+
+        // Reset the form, its error marks, the emergency notice and the character counter
+        form.reset();
+        fields.forEach(function (field) {
+            clearError(field);
+            field.removeAttribute("data-touched");
+        });
+        let oldNotice = form.querySelector(".reason-notice");
+        if (oldNotice) {
+            oldNotice.remove();
+        }
+        form.querySelector("#message").dispatchEvent(new Event("input"));
+
+        // Build the thank-you box
+        let box = document.createElement("div");
+        box.className = "form-success";
+        box.setAttribute("role", "status");
+        box.setAttribute("tabindex", "-1");
+
+        let heading = document.createElement("strong");
+        heading.textContent = "Thank you" + (firstName !== "" ? ", " + firstName : "") + "!";
+
+        let summaryText = document.createElement("p");
+        summaryText.textContent = isEnquiryForm ? "Your enquiry passed all checks." : "Your message passed all checks.";
+
+        // This form is not connected to anything yet, so say so honestly
+        let honestNote = document.createElement("p");
+        if (isEnquiryForm) {
+            honestNote.textContent = "This form is not connected to a reporting service yet, so your enquiry has not been sent. If a child needs help now, please contact the South African Police Service (10111) or Childline (0800 055 555), or phone us on (011) 825 7773.";
+        } else {
+            honestNote.textContent = "This form is not connected to an email service yet, so your message has not been sent. Please phone us on (011) 825 7773 or email chubbychums02@gmail.com.";
+        }
+
+        box.appendChild(heading);
+        box.appendChild(summaryText);
+        box.appendChild(honestNote);
+        form.insertAdjacentElement("afterbegin", box);
+        box.focus();
+    };
+
+    // When the form is submitted, check every field before anything else happens
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        removeFormMessages();
+
+        let invalidCount = 0;
+        let firstInvalidField = null;
+
+        fields.forEach(function (field) {
+            if (!validateField(field)) {
+                invalidCount++;
+                if (firstInvalidField === null) {
+                    firstInvalidField = field;
+                }
+            }
+        });
+
+        if (invalidCount > 0) {
+            let summary = document.createElement("div");
+            summary.className = "form-summary";
+            summary.setAttribute("role", "alert");
+            summary.textContent = "Please fix the " + (invalidCount === 1 ? "1 highlighted field" : invalidCount + " highlighted fields") + " and try again.";
+            form.insertAdjacentElement("afterbegin", summary);
+            firstInvalidField.focus();
+            return;
+        }
+
+        showSuccess();
+    });
+});
