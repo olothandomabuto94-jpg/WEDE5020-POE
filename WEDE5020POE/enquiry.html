@@ -95,6 +95,45 @@
 
       </section>
 
+      <!-- Frequently asked questions: the questions are loaded by JavaScript (see chubbychums.js) -->
+      <section class="faq" id="faq">
+
+        <h2>Frequently Asked Questions</h2>
+
+        <!-- Controls for searching, filtering and sorting the questions -->
+        <div class="faq-controls">
+
+          <div class="faq-control">
+            <label for="faq-search">Search the questions:</label>
+            <input type="search" id="faq-search" placeholder="e.g. donate, report, registered" />
+          </div>
+
+          <div class="faq-control">
+            <label for="faq-category">Category:</label>
+            <select id="faq-category">
+              <option value="all">All categories</option>
+            </select>
+          </div>
+
+          <div class="faq-control">
+            <label for="faq-sort">Sort by:</label>
+            <select id="faq-sort">
+              <option value="default">Suggested order</option>
+              <option value="az">Question A-Z</option>
+              <option value="za">Question Z-A</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Shows how many questions match, and is announced to screen readers when it changes -->
+        <p class="faq-count" id="faq-count" aria-live="polite"></p>
+
+        <!-- The questions are added here by JavaScript -->
+        <div class="faq-list" id="faq-list"></div>
+
+      </section>
+
     </main>
 
     <!-- Site footer -->

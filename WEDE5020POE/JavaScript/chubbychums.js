@@ -338,3 +338,217 @@ if (enquiryForm) {
         charCounter.textContent = length + (length === 1 ? " character" : " characters");
     });
 }
+
+
+// ---------- FAQ: loaded, searched, filtered and sorted with JavaScript (enquiry page) ----------
+
+let faqSection = document.getElementById("faq");
+
+if (faqSection) {
+
+    // The questions and answers. Everything shown in the list is built from this array,
+    // so a new question only needs a new line here. The answers use information from this website.
+    let faqData = [
+        {
+            category: "About Us",
+            question: "What is Chubby Chums?",
+            answer: "Chubby Chums is a non-profit child protection organization. It was established in 1999 to help address the needs of children left destitute by poverty, disease and abuse."
+        },
+        {
+            category: "About Us",
+            question: "Where does Chubby Chums work?",
+            answer: "We primarily operate in Johannesburg and the Far East Rand Regions. What started as a two-man operation working from an enclosed verandah has grown to incorporate 36 Children's Homes."
+        },
+        {
+            category: "About Us",
+            question: "Who does Chubby Chums work with?",
+            answer: "We work in partnership with Child Protection Units and Child Treatment Services to stop child abuse, child neglect and child exploitation, and to promote the importance of early childhood development (ECD)."
+        },
+        {
+            category: "About Us",
+            question: "Is Chubby Chums a registered organization?",
+            answer: "Yes. We were registered as a Section 21 Corporation in 2000, and we are also registered as a Non-Profit Organization (NPO), Non-Government Organization (NGO) and Public Benefit Organization (PBO). Our registration numbers are listed on the Donate page."
+        },
+        {
+            category: "About Us",
+            question: "Has Chubby Chums received any awards?",
+            answer: "Yes. Thanks to the kindness of our donors, Chubby Chums has received an international child protection award."
+        },
+        {
+            category: "Reporting a Concern",
+            question: "How do I report a child I am worried about?",
+            answer: "Fill in the enquiry form on this page and describe your concern. Tell us the child's name (if you know it) and their location or area, and choose the reason that fits best."
+        },
+        {
+            category: "Reporting a Concern",
+            question: "Do I need proof before I report?",
+            answer: "No. You don't need proof, just a genuine concern for a child's safety. Reporting your concerns could save a child's life."
+        },
+        {
+            category: "Reporting a Concern",
+            question: "What if a child is in immediate danger?",
+            answer: "Contact the South African Police Service on 10111 or Childline on 0800 055 555 right away. Please use the form on this page only for non-emergency reports and enquiries."
+        },
+        {
+            category: "Reporting a Concern",
+            question: "Will my enquiry be kept confidential?",
+            answer: "Every enquiry is treated with care and confidentiality. Giving your name on the form is optional."
+        },
+        {
+            category: "Reporting a Concern",
+            question: "What happens after I send an enquiry?",
+            answer: "Chubby Chums works closely with Child Protection Units and Child Treatment Services to investigate reports and get children the help they need."
+        },
+        {
+            category: "Reporting a Concern",
+            question: "What kinds of concerns can I enquire about?",
+            answer: "The form covers suspected abuse, suspected neglect, poverty and basic needs, and illness or disability. Anything else can be sent under \"Other\"."
+        },
+        {
+            category: "Donating",
+            question: "How can I donate to Chubby Chums?",
+            answer: "You can pay into one of our two First National Bank accounts: the Chubby Chums Trust Account or the Chubby Chums account. The full banking details are on the Donate page."
+        },
+        {
+            category: "Donating",
+            question: "Is Chubby Chums tax exempt?",
+            answer: "We are registered as a Public Benefit Organization and have a Tax Exemption Number. Our tax and registration reference numbers are listed on the Donate page."
+        },
+        {
+            category: "Contact",
+            question: "How can I contact Chubby Chums?",
+            answer: "You can phone us on (011) 825 7773 or (011) 873 4747, email chubbychums02@gmail.com, or send a message using the contact form on the Contact page."
+        },
+        {
+            category: "Contact",
+            question: "Where is the Chubby Chums office?",
+            answer: "Our office is at 136 Cydonia Road, Primrose Hill, Germiston, 1401, South Africa. There is a map with a directions link on the Contact page."
+        }
+    ];
+
+    // Select the controls and the places where results are shown
+    let faqSearch = document.getElementById("faq-search");
+    let faqCategory = document.getElementById("faq-category");
+    let faqSort = document.getElementById("faq-sort");
+    let faqCount = document.getElementById("faq-count");
+    let faqList = document.getElementById("faq-list");
+
+    // Fill the category drop-down with each different category found in the data
+    let faqCategories = [];
+    faqData.forEach(function (item) {
+        if (faqCategories.indexOf(item.category) === -1) {
+            faqCategories.push(item.category);
+        }
+    });
+    faqCategories.forEach(function (name) {
+        let option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        faqCategory.appendChild(option);
+    });
+
+    // Adds text to an element and wraps any search words in <mark> so they stand out.
+    // The text is added as text nodes (not HTML), so nothing typed into the search box can change the page.
+    let addHighlightedText = function (parent, text, words) {
+        if (words.length === 0) {
+            parent.appendChild(document.createTextNode(text));
+            return;
+        }
+
+        // Escape special characters so a search such as "(011)" is treated as plain text
+        let escapedWords = words.map(function (word) {
+            return word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        });
+        let pattern = new RegExp("(" + escapedWords.join("|") + ")", "gi");
+
+        // Because the pattern is in brackets, the odd-numbered pieces are the matches
+        text.split(pattern).forEach(function (piece, index) {
+            if (index % 2 === 1) {
+                let mark = document.createElement("mark");
+                mark.textContent = piece;
+                parent.appendChild(mark);
+            } else if (piece !== "") {
+                parent.appendChild(document.createTextNode(piece));
+            }
+        });
+    };
+
+    // Works out which questions to show, then rebuilds the list on the page
+    let showFaqs = function () {
+        // Split what was typed into separate words
+        let words = faqSearch.value.trim().toLowerCase().split(/\s+/).filter(function (word) {
+            return word !== "";
+        });
+        let chosenCategory = faqCategory.value;
+
+        // Filter: keep questions in the chosen category that contain every search word
+        let results = faqData.filter(function (item) {
+            if (chosenCategory !== "all" && item.category !== chosenCategory) {
+                return false;
+            }
+            let text = (item.question + " " + item.answer).toLowerCase();
+            return words.every(function (word) {
+                return text.indexOf(word) !== -1;
+            });
+        });
+
+        // Sort: A-Z or Z-A by question (otherwise the order stays as it is in the data)
+        if (faqSort.value === "az") {
+            results.sort(function (a, b) {
+                return a.question.localeCompare(b.question);
+            });
+        } else if (faqSort.value === "za") {
+            results.sort(function (a, b) {
+                return b.question.localeCompare(a.question);
+            });
+        }
+
+        // Remove the questions that were shown before
+        while (faqList.firstChild) {
+            faqList.removeChild(faqList.firstChild);
+        }
+
+        // Update the "Showing x of y" message
+        faqCount.textContent = "Showing " + results.length + " of " + faqData.length + " questions";
+
+        if (results.length === 0) {
+            let emptyMessage = document.createElement("p");
+            emptyMessage.className = "faq-empty";
+            emptyMessage.textContent = "No questions match your search. Try different words, or ask us your question using the enquiry form.";
+            faqList.appendChild(emptyMessage);
+            return;
+        }
+
+        // Build one expandable item for each question that matched
+        results.forEach(function (item) {
+            let entry = document.createElement("details");
+            entry.className = "faq-item";
+
+            // While searching, open each answer so the highlighted words can be seen
+            if (words.length > 0) {
+                entry.open = true;
+            }
+
+            let summary = document.createElement("summary");
+            addHighlightedText(summary, item.question, words);
+
+            let answer = document.createElement("p");
+            addHighlightedText(answer, item.answer, words);
+
+            let tag = document.createElement("span");
+            tag.className = "faq-category";
+            tag.textContent = item.category;
+
+            entry.appendChild(summary);
+            entry.appendChild(answer);
+            entry.appendChild(tag);
+            faqList.appendChild(entry);
+        });
+    };
+
+    // Update the list whenever the visitor types or changes a drop-down, and show it once on page load
+    faqSearch.addEventListener("input", showFaqs);
+    faqCategory.addEventListener("change", showFaqs);
+    faqSort.addEventListener("change", showFaqs);
+    showFaqs();
+}
