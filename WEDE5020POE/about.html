@@ -82,12 +82,39 @@
 
       
 
+      <!-- Photo gallery: click an image to view it larger in the lightbox -->
+      <section class="gallery-section">
+
+        <h2>Gallery</h2>
+
+        <div class="gallery">
+          <button type="button" class="gallery-item"><img src="IMAGES/kids.jpg" alt="A large group of children gathered outdoors at a Chubby Chums event" /></button>
+          <button type="button" class="gallery-item"><img src="IMAGES/kids2.jpg" alt="Children sitting on the ground with bowls of food, cheering" /></button>
+          <button type="button" class="gallery-item"><img src="IMAGES/kids3.jpg" alt="Smiling children standing behind donated bags of fruit and vegetables" /></button>
+          <button type="button" class="gallery-item"><img src="IMAGES/founder.jpg" alt="A Chubby Chums team member holding a framed certificate" /></button>
+          <button type="button" class="gallery-item"><img src="IMAGES/chybbychums.jpg" alt="Chubby Chums vehicle door showing the organisation's name and contact details" /></button>
+          <button type="button" class="gallery-item"><img src="IMAGES/childabuse.jpg" alt="Children holding hand-made signs calling for an end to child abuse" /></button>
+        </div>
+
+      </section>
+
     </main>
 
     <!-- Site footer -->
     <footer>
       <p>© 2026 Chubby Chums</p>
     </footer>
+    <!-- Lightbox overlay used by the gallery -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button type="button" class="lightbox-close" aria-label="Close image viewer">&times;</button>
+      <button type="button" class="lightbox-prev" aria-label="Previous image">&#10094;</button>
+      <figure class="lightbox-figure">
+        <img class="lightbox-image" alt="" />
+        <figcaption class="lightbox-caption"></figcaption>
+      </figure>
+      <button type="button" class="lightbox-next" aria-label="Next image">&#10095;</button>
+    </div>
+
     <script src="JavaScript/chubbychums.js"></script>
   </body>
 
