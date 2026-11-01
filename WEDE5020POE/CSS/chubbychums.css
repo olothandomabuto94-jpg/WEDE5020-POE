@@ -674,3 +674,117 @@ body.no-scroll {
     margin: 5px;
     padding-left: 10px;
 }
+
+
+/* ---------- FAQ (enquiry page, built by JavaScript) ---------- */
+.faq {
+    margin: 10px;
+    margin-top: 30px;
+    padding: 20px;
+    border: solid;
+    border-color: #BF00FF;
+    border-radius: 16px;
+}
+
+.faq h2 {
+    margin-bottom: 20px;
+}
+
+.faq-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.faq-control {
+    display: flex;
+    flex-direction: column;
+}
+
+.faq-control input {
+    min-width: 280px;
+}
+
+.faq-count {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.faq-item {
+    border: solid;
+    border-color: #00A2FF;
+    border-radius: 16px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.faq-item summary {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+.faq-item summary:focus-visible {
+    outline: 2px solid #FFFFFF;
+}
+
+.faq-item p {
+    margin-top: 10px;
+}
+
+.faq-category {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #FF9900;
+}
+
+.faq-empty {
+    text-align: center;
+}
+
+/* Highlights the words that match the search */
+mark {
+    background-color: #FFF200;
+    color: #000000;
+}
+
+@media (max-width: 768px) {
+    .faq-controls {
+        flex-direction: column;
+    }
+
+    .faq-control input,
+    .faq-control select {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+
+/* ---------- Links inside sentences (internal links) ---------- */
+.inline-links a {
+    padding: 0;
+    text-decoration: underline;
+}
+
+.faq-more a {
+    padding: 2px 4px;
+    margin-left: -4px;
+    text-decoration: underline;
+}
+
+
+/* ---------- Mobile fixes: stop pages scrolling sideways on small screens ---------- */
+
+/* The accordion buttons were 100% wide plus a 5px margin on each side, so they stuck out by 10px */
+.accordion-button {
+    width: calc(100% - 10px);
+}
+
+/* The message boxes have a fixed width (cols="40"), which is wider than a small phone screen */
+textarea {
+    max-width: calc(100% - 10px);
+}

@@ -352,27 +352,32 @@ if (faqSection) {
         {
             category: "About Us",
             question: "What is Chubby Chums?",
-            answer: "Chubby Chums is a non-profit child protection organization. It was established in 1999 to help address the needs of children left destitute by poverty, disease and abuse."
+            answer: "Chubby Chums is a non-profit child protection organization. It was established in 1999 to help address the needs of children left destitute by poverty, disease and abuse.",
+            more: { text: "Read more about our story", href: "about.html" }
         },
         {
             category: "About Us",
             question: "Where does Chubby Chums work?",
-            answer: "We primarily operate in Johannesburg and the Far East Rand Regions. What started as a two-man operation working from an enclosed verandah has grown to incorporate 36 Children's Homes."
+            answer: "We primarily operate in Johannesburg and the Far East Rand Regions. What started as a two-man operation working from an enclosed verandah has grown to incorporate 36 Children's Homes.",
+            more: { text: "Read about our work and history", href: "about.html" }
         },
         {
             category: "About Us",
             question: "Who does Chubby Chums work with?",
-            answer: "We work in partnership with Child Protection Units and Child Treatment Services to stop child abuse, child neglect and child exploitation, and to promote the importance of early childhood development (ECD)."
+            answer: "We work in partnership with Child Protection Units and Child Treatment Services to stop child abuse, child neglect and child exploitation, and to promote the importance of early childhood development (ECD).",
+            more: { text: "Read about our partnerships", href: "about.html" }
         },
         {
             category: "About Us",
             question: "Is Chubby Chums a registered organization?",
-            answer: "Yes. We were registered as a Section 21 Corporation in 2000, and we are also registered as a Non-Profit Organization (NPO), Non-Government Organization (NGO) and Public Benefit Organization (PBO). Our registration numbers are listed on the Donate page."
+            answer: "Yes. We were registered as a Section 21 Corporation in 2000, and we are also registered as a Non-Profit Organization (NPO), Non-Government Organization (NGO) and Public Benefit Organization (PBO). Our registration numbers are listed on the Donate page.",
+            more: { text: "See our registration details", href: "donate.html" }
         },
         {
             category: "About Us",
             question: "Has Chubby Chums received any awards?",
-            answer: "Yes. Thanks to the kindness of our donors, Chubby Chums has received an international child protection award."
+            answer: "Yes. Thanks to the kindness of our donors, Chubby Chums has received an international child protection award.",
+            more: { text: "Support our work on the Donate page", href: "donate.html" }
         },
         {
             category: "Reporting a Concern",
@@ -407,22 +412,26 @@ if (faqSection) {
         {
             category: "Donating",
             question: "How can I donate to Chubby Chums?",
-            answer: "You can pay into one of our two First National Bank accounts: the Chubby Chums Trust Account or the Chubby Chums account. The full banking details are on the Donate page."
+            answer: "You can pay into one of our two First National Bank accounts: the Chubby Chums Trust Account or the Chubby Chums account. The full banking details are on the Donate page.",
+            more: { text: "Go to our banking details", href: "donate.html" }
         },
         {
             category: "Donating",
             question: "Is Chubby Chums tax exempt?",
-            answer: "We are registered as a Public Benefit Organization and have a Tax Exemption Number. Our tax and registration reference numbers are listed on the Donate page."
+            answer: "We are registered as a Public Benefit Organization and have a Tax Exemption Number. Our tax and registration reference numbers are listed on the Donate page.",
+            more: { text: "See our tax and registration details", href: "donate.html" }
         },
         {
             category: "Contact",
             question: "How can I contact Chubby Chums?",
-            answer: "You can phone us on (011) 825 7773 or (011) 873 4747, email chubbychums02@gmail.com, or send a message using the contact form on the Contact page."
+            answer: "You can phone us on (011) 825 7773 or (011) 873 4747, email chubbychums02@gmail.com, or send a message using the contact form on the Contact page.",
+            more: { text: "Go to the Contact page", href: "contact.html" }
         },
         {
             category: "Contact",
             question: "Where is the Chubby Chums office?",
-            answer: "Our office is at 136 Cydonia Road, Primrose Hill, Germiston, 1401, South Africa. There is a map with a directions link on the Contact page."
+            answer: "Our office is at 136 Cydonia Road, Primrose Hill, Germiston, 1401, South Africa. There is a map with a directions link on the Contact page.",
+            more: { text: "See the map and directions", href: "contact.html" }
         }
     ];
 
@@ -541,6 +550,20 @@ if (faqSection) {
 
             entry.appendChild(summary);
             entry.appendChild(answer);
+
+            // Some answers include a link to the page with more information
+            if (item.more) {
+                let moreParagraph = document.createElement("p");
+                moreParagraph.className = "faq-more";
+
+                let moreLink = document.createElement("a");
+                moreLink.href = item.more.href;
+                moreLink.textContent = item.more.text;
+
+                moreParagraph.appendChild(moreLink);
+                entry.appendChild(moreParagraph);
+            }
+
             entry.appendChild(tag);
             faqList.appendChild(entry);
         });

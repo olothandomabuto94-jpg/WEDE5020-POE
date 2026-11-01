@@ -113,6 +113,41 @@ Home (index.html)
 - Added responsive media queries (768px and 480px breakpoints) across all pages, converting Flexbox rows to stacked columns and scaling typography on smaller screens
 - Captured screenshot evidence of all five pages at desktop, tablet, and mobile widths
 
+## Search Engine Optimization (SEO)
+
+### On-page SEO
+- **Keyword research:** keywords were chosen from the wording used on the site and the questions visitors are likely to ask. Search volumes can be confirmed with Google Keyword Planner or Google Trends. The keywords were worked into page titles, meta descriptions, image alt text, the FAQ and link text, without rewriting the original page content.
+
+| Page | Main keyword | Supporting keywords |
+|------|--------------|---------------------|
+| Home | child protection organization South Africa | non-profit, children's homes Johannesburg, Chubby Chums |
+| About | Chubby Chums | child protection NPO, Section 21, PBO, Child Protection Units |
+| Donate | donate to children's charity | support vulnerable children, orphaned children South Africa |
+| Enquiry | report child abuse South Africa | suspected child neglect, Childline, SAPS 10111 |
+| Contact | Chubby Chums Germiston | 136 Cydonia Road, Primrose Hill, contact |
+
+- **Title tags and meta descriptions:** every page has a unique title (52-57 characters) and a unique meta description (143-155 characters) that describe the page and include its main keyword.
+- **Header tags:** each page has exactly one `<h1>`, followed by `<h2>` headings for its sections.
+- **Image optimisation:** images were renamed with descriptive file names (for example `children-eating-outdoors.jpg` instead of `kids2.jpg`), given accurate alt text, and given width and height attributes. The three oversized images were resized (832 KB reduced to 157 KB), and images below the first screen use lazy loading.
+- **URL structure:** pages use short, descriptive, lowercase names (`about.html`, `donate.html`, `enquiry.html`, `contact.html`).
+- **Internal linking:** a "Get Involved" section on the About page, a related-links section on the Donate page, and "read more" links in the FAQ answers connect the pages using descriptive link text.
+- **Mobile-friendliness:** responsive layouts were checked at 320, 360, 390, 414 and 768 pixels wide, and the sideways scrolling that appeared on small screens was fixed.
+
+### Off-page SEO (plan)
+- **Backlinks:** ask partner organisations, Child Protection Units, local community groups and non-profit directories to link to the website, and ask local news outlets to link to it when they feature Chubby Chums.
+- **Social media:** share the website on the organisation's social media pages. The Open Graph tags on each page control the title and description shown when a link is shared.
+- **Local SEO:** the organisation's name, address and phone number are the same on the contact page, the map popup and the structured data (JSON-LD) on the home page, which also lists the areas the organisation serves. Creating a Google Business Profile for 136 Cydonia Road, Germiston would strengthen local search results.
+
+### Additional requests
+- **robots.txt:** added to tell search engines to crawl the site but skip the `screenshots` folder.
+- **Page speed:** smaller images, lazy loading, image dimensions set to avoid layout shift, and early connection to the map servers on the contact page.
+- **Security:** the Leaflet library is loaded with a subresource integrity check, external links use `rel="noopener noreferrer"`, and content added by JavaScript is inserted as plain text so it cannot run as code.
+
+### To do once the site is deployed
+- Create `sitemap.xml` and add its address to `robots.txt`.
+- Add canonical links, plus the page address and a preview image to the Open Graph tags.
+- Add security headers (for example through a `_headers` file on Netlify).
+
 ## References
 Chubby Chums. (2026). *Chubby Chums.* Available at: https://www.chubbychums1.co.za [Accessed 2026].
 
