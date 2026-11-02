@@ -584,7 +584,7 @@ let formsToValidate = document.querySelectorAll("form");
 formsToValidate.forEach(function (form) {
 
     let isEnquiryForm = form.classList.contains("enquiry-form");
-    let fields = form.querySelectorAll('input:not([type="submit"]), select, textarea');
+    let fields = form.querySelectorAll('input:not([type="submit"]):not([name="bot-field"]), select, textarea');
 
     // Letters (including accented ones), spaces, apostrophes, full stops and hyphens
     let namePattern = /^\p{L}[\p{L}\s'.-]*$/u;
@@ -787,26 +787,87 @@ formsToValidate.forEach(function (form) {
         heading.textContent = "Thank you" + (firstName !== "" ? ", " + firstName : "") + "!";
 
         let summaryText = document.createElement("p");
-        summaryText.textContent = isEnquiryForm ? "Your enquiry passed all checks." : "Your message passed all checks.";
-
-        // This form is not connected to anything yet, so say so honestly
-        let honestNote = document.createElement("p");
-        if (isEnquiryForm) {
-            honestNote.textContent = "This form is not connected to a reporting service yet, so your enquiry has not been sent. If a child needs help now, please contact the South African Police Service (10111) or Childline (0800 055 555), or phone us on (011) 825 7773.";
-        } else {
-            honestNote.textContent = "This form is not connected to an email service yet, so your message has not been sent. Please phone us on (011) 825 7773 or email chubbychums02@gmail.com.";
-        }
+        summaryText.textContent = isEnquiryForm ? "Your enquiry has been sent." : "Your message has been sent. Thank you for getting in touch.";
 
         box.appendChild(heading);
         box.appendChild(summaryText);
-        box.appendChild(honestNote);
+
+        // Remind people what to do if a child is in danger right now
+        if (isEnquiryForm) {
+            let emergencyNote = document.createElement("p");
+            emergencyNote.textContent = "If a child is in immediate danger, please contact the South African Police Service (10111) or Childline (0800 055 555) right away.";
+            box.appendChild(emergencyNote);
+        }
         form.insertAdjacentElement("afterbegin", box);
         box.focus();
+    };
+
+    // Shows a box explaining that the form could not be sent, and what to do instead
+    let showSendError = function () {
+        removeFormMessages();
+
+        let box = document.createElement("div");
+        box.className = "form-summary";
+        box.setAttribute("role", "alert");
+        box.setAttribute("tabindex", "-1");
+
+        let heading = document.createElement("strong");
+        heading.textContent = "Sorry, we could not send your " + (isEnquiryForm ? "enquiry." : "message.");
+
+        let help = document.createElement("p");
+        if (isEnquiryForm) {
+            help.textContent = "Please check your internet connection and try again. If a child needs help now, please contact the South African Police Service (10111) or Childline (0800 055 555), or phone us on (011) 825 7773.";
+        } else {
+            help.textContent = "Please check your internet connection and try again, or phone us on (011) 825 7773 or email chubbychums02@gmail.com.";
+        }
+
+        box.appendChild(heading);
+        box.appendChild(help);
+        form.insertAdjacentElement("afterbegin", box);
+        box.focus();
+    };
+
+    // Sends the form to Netlify Forms, then shows the thank-you box (or the error box if sending fails)
+    let sendForm = function () {
+        let originalLabel = submitButton.value;
+        submitButton.disabled = true;
+        submitButton.value = "Sending...";
+
+        // Netlify needs to know which form this is. It normally adds this itself when the site is deployed.
+        let formData = new FormData(form);
+        if (!formData.has("form-name")) {
+            formData.append("form-name", form.getAttribute("name"));
+        }
+
+        fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString()
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("The form could not be sent");
+                }
+                showSuccess();
+            })
+            .catch(function () {
+                showSendError();
+            })
+            .then(function () {
+                submitButton.disabled = false;
+                submitButton.value = originalLabel;
+            });
     };
 
     // When the form is submitted, check every field before anything else happens
     form.addEventListener("submit", function (event) {
         event.preventDefault();
+
+        // Ignore a second click or Enter press while the first send is still in progress
+        if (submitButton.disabled) {
+            return;
+        }
+
         removeFormMessages();
 
         let invalidCount = 0;
@@ -831,6 +892,6 @@ formsToValidate.forEach(function (form) {
             return;
         }
 
-        showSuccess();
+        sendForm();
     });
 });

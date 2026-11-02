@@ -7,12 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Chubby Chums | Germiston Office, Phone and Map</title>
     <meta name="description" content="Contact Chubby Chums at 136 Cydonia Road, Primrose Hill, Germiston. Call (011) 825 7773, email us, send a message or get directions on the map." />
-    <!-- Social sharing tags (the page address and preview image are added after the site is deployed) -->
+    <!-- Canonical address: tells search engines which web address is the main one for this page -->
+    <link rel="canonical" href="https://sage-narwhal-2e7353.netlify.app/contact" />
+    <!-- Social sharing tags: control how a link to this page looks when it is shared -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Chubby Chums" />
     <meta property="og:title" content="Contact Chubby Chums | Germiston Office, Phone and Map" />
     <meta property="og:description" content="Contact Chubby Chums at 136 Cydonia Road, Primrose Hill, Germiston. Call (011) 825 7773, email us, send a message or get directions on the map." />
     <meta property="og:locale" content="en_ZA" />
+    <meta property="og:url" content="https://sage-narwhal-2e7353.netlify.app/contact" />
+    <meta property="og:image" content="https://sage-narwhal-2e7353.netlify.app/IMAGES/chubby-chums-vehicle-door.jpg" />
+    <meta property="og:image:alt" content="Chubby Chums vehicle door showing the organisation's name and contact details" />
+    <meta property="og:image:width" content="400" />
+    <meta property="og:image:height" content="276" />
+    <meta name="twitter:card" content="summary" />
     <link rel="icon" href="IMAGES/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="IMAGES/favicon.png" sizes="32x32" type="image/png" />
     <!-- Start connecting to the map servers early so the map loads faster -->
@@ -70,9 +78,14 @@
       <section class="form-section">
         
 
-        <form novalidate>
+        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
 
           <p class="form-note">Fields marked with an asterisk (*) are required.</p>
+
+          <!-- Netlify Forms spam trap: people never see this field, but spam bots fill it in -->
+          <p class="hp-field" aria-hidden="true">
+            <label>Leave this field empty: <input type="text" name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
 
           <!-- Name  -->
           <label for="name">Name:<span class="required-mark" aria-hidden="true"> *</span></label><br />

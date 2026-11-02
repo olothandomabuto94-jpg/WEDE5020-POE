@@ -2,5 +2,4 @@
 User-agent: *
 Disallow: /screenshots/
 
-# TO DO after the site is deployed: remove the # below and put in the real web address
-# Sitemap: https://YOUR-SITE-ADDRESS/sitemap.xml
+Sitemap: https://sage-narwhal-2e7353.netlify.app/sitemap.xml

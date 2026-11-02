@@ -838,3 +838,9 @@ textarea.input-error {
 .form-success:focus {
     outline: 2px solid #FFFFFF;
 }
+
+
+/* The hidden spam-trap field in the forms (see Netlify Forms) */
+.hp-field {
+    display: none;
+}
